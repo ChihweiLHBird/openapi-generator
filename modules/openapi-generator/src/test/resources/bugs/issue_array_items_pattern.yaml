@@ -1,0 +1,22 @@
+openapi: 3.0.3
+info:
+  title: Array Items Pattern Test
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    TaggedItem:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          pattern: "^[a-zA-Z]+$"
+        tags:
+          type: array
+          maxItems: 50
+          items:
+            type: string
+            maxLength: 128
+            pattern: "^[A-Z0-9_\\- ]+$"

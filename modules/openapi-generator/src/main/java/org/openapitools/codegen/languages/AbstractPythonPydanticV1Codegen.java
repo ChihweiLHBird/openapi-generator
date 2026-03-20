@@ -1882,6 +1882,10 @@ public abstract class AbstractPythonPydanticV1Codegen extends DefaultCodegen imp
     @Override
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
         postProcessPattern(property.pattern, property.vendorExtensions);
+        // Also process pattern for array/map items so that x-regex vendor extension is set
+        if (property.items != null) {
+            postProcessPattern(property.items.pattern, property.items.vendorExtensions);
+        }
     }
 
     /*

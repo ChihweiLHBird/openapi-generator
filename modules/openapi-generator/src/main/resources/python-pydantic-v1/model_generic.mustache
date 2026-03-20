@@ -55,6 +55,32 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
             raise ValueError(r"must validate the regular expression {{{vendorExtensions.x-pattern}}}")
         return value
     {{/vendorExtensions.x-regex}}
+    {{^vendorExtensions.x-regex}}
+    {{#isArray}}
+    {{#items.vendorExtensions.x-regex}}
+
+    @validator('{{{name}}}')
+    def {{{name}}}_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        {{^required}}
+        if value is None:
+            return value
+
+        {{/required}}
+        {{#required}}
+        {{#isNullable}}
+        if value is None:
+            return value
+
+        {{/isNullable}}
+        {{/required}}
+        for i_item in value:
+            if not re.match(r"{{{.}}}", i_item{{#items.vendorExtensions.x-modifiers}} ,re.{{{.}}}{{/items.vendorExtensions.x-modifiers}}):
+                raise ValueError(r"must validate the regular expression {{{items.vendorExtensions.x-pattern}}}")
+        return value
+    {{/items.vendorExtensions.x-regex}}
+    {{/isArray}}
+    {{/vendorExtensions.x-regex}}
     {{#isEnum}}
 
     @validator('{{{name}}}')

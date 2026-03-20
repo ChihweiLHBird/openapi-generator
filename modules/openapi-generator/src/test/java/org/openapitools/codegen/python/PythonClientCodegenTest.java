@@ -670,6 +670,21 @@ public class PythonClientCodegenTest {
         assertFileContains(p, "from pydantic import BaseModel, ConfigDict, field_validator");
     }
 
+    @Test(description = "Array items with pattern should generate field_validator for items")
+    public void testArrayItemsPatternGeneratesFieldValidator() throws IOException {
+        final DefaultCodegen codegen = new PythonClientCodegen();
+        final String outputPath = generateFiles(codegen, "src/test/resources/bugs/issue_array_items_pattern.yaml");
+        final Path p = Paths.get(outputPath + "openapi_client/models/tagged_item.py");
+
+        assertFileExists(p);
+        // Should import field_validator
+        assertFileContains(p, "field_validator");
+        // Should generate a field_validator for the tags property that validates array items
+        assertFileContains(p, "@field_validator('tags')");
+        assertFileContains(p, "for i_item in value:");
+        assertFileContains(p, "re.match(r\"^[A-Z0-9_\\- ]+$\"");
+    }
+
     @Test(description = "Verify non-poetry1 mode uses object notation for license")
     public void testNonPoetry1LicenseFormat() throws IOException {
         File output = Files.createTempDirectory("test").toFile().getCanonicalFile();
