@@ -1334,6 +1334,10 @@ public abstract class AbstractPythonCodegen extends DefaultCodegen implements Co
     @Override
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
         postProcessPattern(property.pattern, property.vendorExtensions);
+        // Also process pattern for array/map items so that x-regex vendor extension is set
+        if (property.items != null) {
+            postProcessPattern(property.items.pattern, property.items.vendorExtensions);
+        }
     }
 
     /*
@@ -2065,6 +2069,11 @@ public abstract class AbstractPythonCodegen extends DefaultCodegen implements Co
             }
 
             if (cp.getPattern() != null) {
+                moduleImports.add("pydantic", "field_validator");
+            }
+
+            // Also add field_validator when array/map items have pattern constraints
+            if (cp.getItems() != null && cp.getItems().getPattern() != null) {
                 moduleImports.add("pydantic", "field_validator");
             }
 
