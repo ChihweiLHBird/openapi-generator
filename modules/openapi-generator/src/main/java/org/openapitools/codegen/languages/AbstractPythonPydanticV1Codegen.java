@@ -771,11 +771,6 @@ public abstract class AbstractPythonPydanticV1Codegen extends DefaultCodegen imp
     }
 
     @Override
-    public String toApiName(String name) {
-        return super.toApiName(name);
-    }
-
-    @Override
     public String toApiVarName(String name) {
         return underscore(toApiName(name));
     }

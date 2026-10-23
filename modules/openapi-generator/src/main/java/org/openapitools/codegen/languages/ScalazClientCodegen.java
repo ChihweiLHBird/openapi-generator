@@ -137,11 +137,6 @@ public class ScalazClientCodegen extends AbstractScalaCodegen implements Codegen
     }
 
     @Override
-    public void processOpts() {
-        super.processOpts();
-    }
-
-    @Override
     public String toParamName(String name) {
         // obtain the name from parameterNameMapping directly if provided
         if (parameterNameMapping.containsKey(name)) {

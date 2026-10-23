@@ -293,11 +293,6 @@ public class CppOatppClientCodegen extends AbstractCppCodegen {
     }
 
     @Override
-    public String apiFilename(String templateName, String tag) {
-        return super.apiFilename(templateName, tag);
-    }
-
-    @Override
     public String toApiFilename(String name) {
         return toApiName(name);
     }

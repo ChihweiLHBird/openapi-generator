@@ -199,9 +199,4 @@ public class PhpLaravelServerCodegen extends AbstractPhpCodegen implements Codeg
         }
         return null;
     }
-
-    @Override
-    public String getSchemaType(Schema p) {
-        return super.getSchemaType(p);
-    }
 }

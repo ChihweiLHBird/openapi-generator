@@ -61,11 +61,6 @@ public abstract class AbstractApexCodegen extends DefaultCodegen implements Code
     }
 
     @Override
-    public void processOpts() {
-        super.processOpts();
-    }
-
-    @Override
     public String escapeReservedWord(String name) {
         if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);

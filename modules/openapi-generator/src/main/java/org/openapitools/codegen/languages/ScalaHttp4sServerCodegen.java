@@ -336,12 +336,6 @@ public class ScalaHttp4sServerCodegen extends DefaultCodegen implements CodegenC
     }
 
     @Override
-    public Map<String, String> inlineSchemaOption() {
-        return super.inlineSchemaOption();
-    }
-
-
-    @Override
     public boolean isEnablePostProcessFile() {
         return true;
     }

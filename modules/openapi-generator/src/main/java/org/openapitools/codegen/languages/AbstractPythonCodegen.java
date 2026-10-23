@@ -971,11 +971,6 @@ public abstract class AbstractPythonCodegen extends DefaultCodegen implements Co
     }
 
     @Override
-    public String toApiName(String name) {
-        return super.toApiName(name);
-    }
-
-    @Override
     public String toApiVarName(String name) {
         return underscore(toApiName(name));
     }

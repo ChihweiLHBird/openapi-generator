@@ -20,7 +20,6 @@ package org.openapitools.codegen.languages;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
@@ -665,39 +664,6 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         return op;
 
-    }
-
-    /**
-     * Preprocess original properties from the OpenAPI definition where necessary.
-     *
-     * @param openAPI [description]
-     */
-    @Override
-    public void preprocessOpenAPI(OpenAPI openAPI) {
-        super.preprocessOpenAPI(openAPI);
-
-      /* TODO need to revise the logic below
-      if ("/".equals(openAPI.getServers())) {
-          openAPI.setBasePath("");
-      }
-      */
-
-      /* there should not be a need to get the vendor extension this way
-      if(openAPI.getInfo() != null
-         && openAPI.getInfo().getVendorExtensions()!=null) {
-        String bash_codegen_app_description
-          = (String)openAPI.getInfo().getVendorExtensions()
-                                            .get("x-bash-codegen-description");
-
-        if (bash_codegen_app_description != null) {
-          bash_codegen_app_description
-            = escapeText(bash_codegen_app_description);
-
-          additionalProperties.put("x-bash-codegen-app-description",
-            bash_codegen_app_description);
-
-        }
-      }*/
     }
 
     @Override

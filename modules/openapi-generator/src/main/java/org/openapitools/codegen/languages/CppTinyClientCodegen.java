@@ -334,11 +334,6 @@ public class CppTinyClientCodegen extends AbstractCppCodegen implements CodegenC
     }
 
     @Override
-    public String toApiImport(String name) {
-        return super.toApiImport(name);
-    }
-
-    @Override
     public String toVarName(String name) {
         String paramName = name.replaceAll("[^a-zA-Z0-9_]", "");
         if (name.length() > 0) {
