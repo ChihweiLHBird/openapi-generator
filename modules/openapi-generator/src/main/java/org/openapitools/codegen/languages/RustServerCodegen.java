@@ -81,7 +81,6 @@ public class RustServerCodegen extends AbstractRustCodegen implements CodegenCon
 
     private static final String xmlMimeType = "application/xml";
     private static final String textXmlMimeType = "text/xml";
-    private static final String octetMimeType = "application/octet-stream";
     private static final String plainTextMimeType = "text/plain";
     private static final String jsonMimeType = "application/json";
 
@@ -428,10 +427,6 @@ public class RustServerCodegen extends AbstractRustCodegen implements CodegenCon
 
     private boolean isMimetypeMultipartFormData(String mimetype) {
         return mimetype.toLowerCase(Locale.ROOT).startsWith("multipart/form-data");
-    }
-
-    private boolean isMimetypeOctetStream(String mimetype) {
-        return mimetype.toLowerCase(Locale.ROOT).startsWith(octetMimeType);
     }
 
     private boolean isMimetypeMultipartRelated(String mimetype) {

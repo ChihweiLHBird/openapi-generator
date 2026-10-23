@@ -418,10 +418,6 @@ public class RustServerCodegenDeprecated extends AbstractRustCodegen implements 
         return mimetype.toLowerCase(Locale.ROOT).startsWith("multipart/form-data");
     }
 
-    private boolean isMimetypeOctetStream(String mimetype) {
-        return mimetype.toLowerCase(Locale.ROOT).startsWith(octetMimeType);
-    }
-
     private boolean isMimetypeMultipartRelated(String mimetype) {
         return mimetype.toLowerCase(Locale.ROOT).startsWith("multipart/related");
     }

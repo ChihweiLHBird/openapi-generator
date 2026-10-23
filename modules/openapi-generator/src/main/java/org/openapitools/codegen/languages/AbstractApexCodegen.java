@@ -17,7 +17,6 @@
 
 package org.openapitools.codegen.languages;
 
-import com.google.common.base.Strings;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.MapSchema;
 import io.swagger.v3.oas.models.media.Schema;
@@ -472,33 +471,6 @@ public abstract class AbstractApexCodegen extends DefaultCodegen implements Code
         return postProcessModelsEnum(objs);
     }
 
-    /* the following function is not used anywhere in this class so we'll remove it later
-    private static String getAccept(Operation operation) {
-        String accepts = null;
-        String defaultContentType = "application/json";
-        if (operation.getProduces() != null && !operation.getProduces().isEmpty()) {
-            StringBuilder sb = new StringBuilder();
-            for (String produces : operation.getProduces()) {
-                if (defaultContentType.equalsIgnoreCase(produces)) {
-                    accepts = defaultContentType;
-                    break;
-                } else {
-                    if (sb.length() > 0) {
-                        sb.append(",");
-                    }
-                    sb.append(produces);
-                }
-            }
-            if (accepts == null) {
-                accepts = sb.toString();
-            }
-        } else {
-            accepts = defaultContentType;
-        }
-
-        return accepts;
-    }*/
-
     @Override
     protected boolean needToImport(String type) {
         return super.needToImport(type) && type.indexOf(".") < 0;
@@ -572,63 +544,6 @@ public abstract class AbstractApexCodegen extends DefaultCodegen implements Code
         }
 
         return op;
-    }
-
-    private static CodegenModel reconcileInlineEnums(CodegenModel codegenModel, CodegenModel parentCodegenModel) {
-        // This generator uses inline classes to define enums, which breaks when
-        // dealing with models that have subTypes. To clean this up, we will analyze
-        // the parent and child models, look for enums that match, and remove
-        // them from the child models and leave them in the parent.
-        // Because the child models extend the parents, the enums will be available via the parent.
-
-        // Only bother with reconciliation if the parent model has enums.
-        if (!parentCodegenModel.hasEnums) {
-            return codegenModel;
-        }
-
-        // Get the properties for the parent and child models
-        final List<CodegenProperty> parentModelCodegenProperties = parentCodegenModel.vars;
-        List<CodegenProperty> codegenProperties = codegenModel.vars;
-
-        // Iterate over all of the parent model properties
-        boolean removedChildEnum = false;
-        for (CodegenProperty parentModelCodegenProperty : parentModelCodegenProperties) {
-            // Look for enums
-            if (parentModelCodegenProperty.isEnum) {
-                // Now that we have found an enum in the parent class,
-                // and search the child class for the same enum.
-                Iterator<CodegenProperty> iterator = codegenProperties.iterator();
-                while (iterator.hasNext()) {
-                    CodegenProperty codegenProperty = iterator.next();
-                    if (codegenProperty.isEnum && codegenProperty.equals(parentModelCodegenProperty)) {
-                        // We found an enum in the child class that is
-                        // a duplicate of the one in the parent, so remove it.
-                        iterator.remove();
-                        removedChildEnum = true;
-                    }
-                }
-            }
-        }
-
-        if (removedChildEnum) {
-            codegenModel.vars = codegenProperties;
-        }
-        return codegenModel;
-    }
-
-    private static String sanitizePackageName(String packageName) {
-        packageName = packageName.trim(); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-        packageName = packageName.replaceAll("[^a-zA-Z0-9_\\.]", "_");
-        if (Strings.isNullOrEmpty(packageName)) {
-            return "invalidPackageName";
-        }
-        return packageName;
-    }
-
-
-    private String sanitizePath(String p) {
-        //prefer replace a ", instead of a fuLL URL encode for readability
-        return p.replaceAll("\"", "%22");
     }
 
     @Override
